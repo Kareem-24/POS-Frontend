@@ -12,15 +12,17 @@
         <a mat-list-item>
             <span class="entry">
                <mat-icon>house</mat-icon>
-               <span *ngIf="!isCollapsed">Dashboard</span>
+               @if(!isCollapsed) {
+                <span>Dashboard</span>
+               }
             </span>
          </a>
-
-          <app-user-tab [isCollapsed]="isCollapsed" />
+         
+          <app-user-tab [isCollapsed]="isCollapsed"/>
 
       </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content class="px-3 mx-5">
         <router-outlet />
     </mat-sidenav-content>
   </mat-sidenav-container>

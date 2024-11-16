@@ -1,4 +1,4 @@
-<mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
+<!-- <mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding >
       <button mat-icon-button disabled></button>
       {{node.name}}
@@ -14,5 +14,35 @@
       <span *ngIf="!isCollapsed">  {{node.name}}</span>
     
     </mat-tree-node>
-  </mat-tree>
+  </mat-tree> -->
   
+
+  <!-- Parent Item (User) -->
+<a mat-list-item (click)="toggleExpand()">
+  <span class="entry">
+    <mat-icon >person</mat-icon>
+    @if (!isCollapsed) {
+      <span >Users</span>
+    }
+  </span>
+</a>
+
+<!-- Child Items (Visible When Expanded) -->
+<div *ngIf="isExpanded"  class="flex items-center flex-col">
+  <a mat-list-item >
+    <span class="entry">
+      <mat-icon>person_add</mat-icon>
+      @if (!isCollapsed) {
+      <span>Add User</span>
+      }
+    </span>
+  </a>
+  <a mat-list-item >
+    <span class="entry">
+      <mat-icon>security</mat-icon>
+      @if (!isCollapsed) {
+      <span >User Privileges</span>
+      }
+    </span>
+  </a>
+</div>

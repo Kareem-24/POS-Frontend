@@ -1,0 +1,26 @@
+<app-page-header [pageTitle]="pageTitle"/>
+
+<div class="items-center gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <mat-form-field>
+        <mat-label>إسم الفئة</mat-label>
+        <input matInput>
+      </mat-form-field>
+
+      <section class="example-section col">
+        <mat-checkbox class="example-margin"  [(ngModel)]="isSubCategoryChecked">فئة فرعية</mat-checkbox>
+      </section>
+
+@if(isSubCategoryChecked) {
+  <div class="flex flex-col">
+    <mat-form-field >
+      <mat-label >اختر الفئة الأساسية</mat-label>
+      <mat-select>     
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+}
+      
+</div>
+
+<app-save-btn/>

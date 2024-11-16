@@ -3,14 +3,9 @@ import { Component ,ChangeDetectionStrategy, Input} from '@angular/core';
 import {MatTreeModule} from '@angular/material/tree';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import { ISidebarNode } from '../../../Models/ISidebarNode';
 
 
-interface ISidebarNode {
-  name: string;
-  icon?: string;
-  link?: string;
-  children?: ISidebarNode[];
-}
 
 
 const treeData: ISidebarNode[] = [
@@ -29,7 +24,7 @@ const treeData: ISidebarNode[] = [
   standalone: true,
   imports: [CommonModule , MatTreeModule, MatButtonModule, MatIconModule],
 templateUrl: './user-tab.component.html',
-  styleUrl: './user-tab.component.css',
+  styleUrls: ['./user-tab.component.css','../sidebar/sidebar.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
@@ -37,7 +32,13 @@ templateUrl: './user-tab.component.html',
 export class UserTabComponent {
   @Input() isCollapsed: boolean = false;
   dataSource = treeData;
+  isExpanded: boolean = false;
+
   childrenAccessor = (node: ISidebarNode) => node.children ?? [];
 
   hasChild = (_: number, node: ISidebarNode) =>  !!node.children && node.children.length > 0;
+
+  toggleExpand() {
+    this.isExpanded = !this.isExpanded;
+  }
 }

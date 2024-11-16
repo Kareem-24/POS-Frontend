@@ -1,0 +1,99 @@
+/pos-app/
+│
+├── /src/
+│   ├── /app/
+│   │   ├── /core/                            # Core module for singleton services and global utilities
+│   │   │   ├── /services/                    # Core services used throughout the app
+│   │   │   │   ├── auth.service.ts           # Auth logic
+│   │   │   │   ├── api.service.ts            # Centralized API calls
+│   │   │   │   └── notification.service.ts   # Notification service for alerts
+│   │   │   │
+│   │   │   ├── /interceptors/                # HTTP interceptors
+│   │   │   ├── /guards/                      # Route guards
+│   │   │   ├── /models/                      # Core models used across the app
+│   │   │   ├── /utils/                       # Utility functions and constants
+│   │   │   └── core.module.ts
+│   │   │
+│   │   ├── /shared/                          # Shared module for reusable components, directives, and pipes
+│   │   │   ├── /components/                  # Common reusable components
+│   │   │   │   ├── modal/                    # Modal component
+│   │   │   │   ├── loading-spinner/          # Loading spinner
+│   │   │   │   ├── pagination/               # Pagination controls
+│   │   │   │   └── table/                    # Generic table for lists
+│   │   │   │
+│   │   │   ├── /directives/                  # Common directives
+│   │   │   ├── /pipes/                       # Common pipes
+│   │   │   └── shared.module.ts              # Shared module declaration
+│   │   │
+│   │   ├── /features/                        # POS-specific feature modules
+│   │   │   ├── /user/                        # User management module
+│   │   │   │   ├── /components/
+│   │   │   │   │   ├── user-list/            # User list component
+│   │   │   │   │   ├── user-detail/          # User detail view component
+│   │   │   │   │   └── user-form/            # User form for create/update
+│   │   │   │   ├── /services/
+│   │   │   │   │   └── user.service.ts       # User-specific API handling
+│   │   │   │   ├── /models/
+│   │   │   │   │   └── user.model.ts
+│   │   │   │   ├── user-routing.module.ts    # User module routing
+│   │   │   │   └── user.module.ts            # User module declaration
+│   │   │   │
+│   │   │   ├── /product/                     # Product management module
+│   │   │   │   ├── /components/
+│   │   │   │   │   ├── product-list/
+│   │   │   │   │   ├── product-detail/
+│   │   │   │   │   └── product-form/
+│   │   │   │   ├── /services/
+│   │   │   │   ├── /models/
+│   │   │   │   ├── product-routing.module.ts
+│   │   │   │   └── product.module.ts
+│   │   │   │
+│   │   │   ├── /sales/                       # Sales module
+│   │   │   │   ├── /components/
+│   │   │   │   │   ├── sales-list/
+│   │   │   │   │   ├── sales-detail/
+│   │   │   │   │   └── sales-create/
+│   │   │   │   ├── /services/
+│   │   │   │   ├── /models/
+│   │   │   │   ├── sales-routing.module.ts
+│   │   │   │   └── sales.module.ts
+│   │   │   │
+│   │   │   ├── /inventory/                   # Inventory management module
+│   │   │   │   ├── /components/
+│   │   │   │   ├── /services/
+│   │   │   │   ├── /models/
+│   │   │   │   └── inventory.module.ts
+│   │   │   │
+│   │   │   ├── /client/                      # Client management module
+│   │   │   │   ├── /components/
+│   │   │   │   ├── /services/
+│   │   │   │   ├── /models/
+│   │   │   │   └── client.module.ts
+│   │   │   │
+│   │   │   ├── /order/                       # Order management module
+│   │   │   │   ├── /components/
+│   │   │   │   ├── /services/
+│   │   │   │   ├── /models/
+│   │   │   │   └── order.module.ts
+│   │   │   │
+│   │   │   ├── /report/                      # Reporting module
+│   │   │   │   ├── /components/
+│   │   │   │   ├── /services/
+│   │   │   │   └── report.module.ts
+│   │   │   │
+│   │   │   └── ...                           # Additional feature modules
+│   │   │
+│   │   ├── /layout/                          # Application layout components
+│   │   │   ├── /navbar/                      # Navigation bar
+│   │   │   ├── /sidebar/                     # Sidebar menu
+│   │   │   ├── header.component.ts           # Header component
+│   │   │   └── layout.module.ts              # Layout module
+│   │   │
+│   │   ├── /assets/                          # Static assets (images, fonts, etc.)
+│   │   ├── /environments/                    # Environment configuration
+│   │   ├── app-routing.module.ts             # Root routing configuration
+│   │   └── app.module.ts                     # Root application module
+│
+├── angular.json                              # Angular CLI configuration
+├── tsconfig.json                             # TypeScript configuration
+└── package.json                              # Project dependencies and scripts
