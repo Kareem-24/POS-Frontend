@@ -1,26 +1,42 @@
-<app-page-header [pageTitle]="pageTitle"/>
+// ... existing header ...
 
-<div class="items-center gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+  <div class="items-center gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     <mat-form-field>
-        <mat-label>إسم الفئة</mat-label>
-        <input matInput>
-      </mat-form-field>
-
-      <section class="example-section col">
-        <mat-checkbox class="example-margin"  [(ngModel)]="isSubCategoryChecked">فئة فرعية</mat-checkbox>
-      </section>
-
-@if(isSubCategoryChecked) {
-  <div class="flex flex-col">
-    <mat-form-field >
-      <mat-label >اختر الفئة الأساسية</mat-label>
-      <mat-select>     
-      </mat-select>
+      <mat-label>إسم الفئة</mat-label>
+      <input matInput formControlName="name">
+      <mat-error *ngIf="categoryForm.get('name')?.errors?.['required']">
+        هذا الحقل مطلوب
+      </mat-error>
     </mat-form-field>
-  </div>
-  
-}
-      
-</div>
 
-<app-save-btn/>
+    <section class="example-section col">
+      <mat-checkbox class="example-margin" formControlName="isSubCategory">فئة فرعية</mat-checkbox>
+    </section>
+
+    @if(categoryForm.get('isSubCategory')?.value) {
+      <div class="flex flex-col">
+        <mat-form-field>
+          <mat-label>اختر الفئة الأساسية</mat-label>
+          <mat-select formControlName="parentId">
+            <mat-option *ngFor="let category of parentCategories" [value]="category.id">
+              {{category.name}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="categoryForm.get('parentId')?.errors?.['required']">
+            هذا الحقل مطلوب
+          </mat-error>
+        </mat-form-field>
+      </div>
+    }
+  </div>
+
+  <app-save-btn [disabled]="!categoryForm.valid"/>
+</form>
+
+
+<app-notification
+  [message]="(notificationService.notification$ | async)?.message || ''"
+  [type]="(notificationService.notification$ | async)?.type || 'success'"
+  [show]="(notificationService.notification$ | async) !== null">
+</app-notification>

@@ -1,36 +1,49 @@
 <app-page-header [pageTitle]="pageTitle"/>
 
-<div class="items-center gap-4  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <div class="items-center gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     <mat-form-field class="col">
-        <mat-label>إسم الصنف</mat-label>
-        <input matInput>
-      </mat-form-field>
+      <mat-label>إسم الصنف</mat-label>
+      <input matInput formControlName="name">
+      <mat-error *ngIf="productForm.get('name')?.errors?.['required']">هذا الحقل مطلوب</mat-error>
+    </mat-form-field>
 
-      <mat-form-field class="col">
-        <mat-label>الكود</mat-label>
-        <input matInput>
-      </mat-form-field>
+    <mat-form-field class="col">
+      <mat-label>الكود</mat-label>
+      <input matInput formControlName="code">
+      <mat-error *ngIf="productForm.get('code')?.errors?.['required']">هذا الحقل مطلوب</mat-error>
+    </mat-form-field>
 
-      <mat-form-field class="col">
-        <mat-label>الفئة</mat-label>
-        <mat-select>        
-        </mat-select>
-      </mat-form-field>
-      
-      <mat-form-field class="col">
-        <mat-label>الكمية</mat-label>
-        <input matInput type="number" min="0">
-      </mat-form-field>
+    <mat-form-field class="col">
+      <mat-label>الفئة</mat-label>
+      <mat-select formControlName="category">        
+      </mat-select>
+      <mat-error *ngIf="productForm.get('category')?.errors?.['required']">هذا الحقل مطلوب</mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="col">
+      <mat-label>الكمية</mat-label>
+      <input matInput type="number" min="0" formControlName="quantity">
+      <mat-error *ngIf="productForm.get('quantity')?.errors?.['required']">هذا الحقل مطلوب</mat-error>
+      <mat-error *ngIf="productForm.get('quantity')?.errors?.['min']">يجب أن تكون القيمة 0 أو أكثر</mat-error>
+    </mat-form-field>
 
-      <mat-form-field class="col">
-        <mat-label>سعر الشراء</mat-label>
-        <input matInput type="number" min="0">
-      </mat-form-field>
+    <mat-form-field class="col">
+      <mat-label>سعر الشراء</mat-label>
+      <input matInput type="number" min="0" formControlName="purchasePrice">
+      <mat-error *ngIf="productForm.get('purchasePrice')?.errors?.['required']">هذا الحقل مطلوب</mat-error>
+      <mat-error *ngIf="productForm.get('purchasePrice')?.errors?.['min']">يجب أن تكون القيمة 0 أو أكثر</mat-error>
+    </mat-form-field>
 
-      <mat-form-field class="col">
-        <mat-label>سعر البيع</mat-label>
-        <input matInput type="number" min="0">
-      </mat-form-field>
-</div>
+    <mat-form-field class="col">
+      <mat-label>سعر البيع</mat-label>
+      <input matInput type="number" min="0" formControlName="sellingPrice">
+      <mat-error *ngIf="productForm.get('sellingPrice')?.errors?.['required']">هذا الحقل مطلوب</mat-error>
+      <mat-error *ngIf="productForm.get('sellingPrice')?.errors?.['min']">يجب أن تكون القيمة 0 أو أكثر</mat-error>
+    </mat-form-field>
 
-<app-save-btn/>
+    <app-image-uploader (imageSelected)="onImageSelected($event)"></app-image-uploader>
+  </div>
+
+  <app-save-btn type="submit" [disabled]="productForm.invalid"/>
+</form>
