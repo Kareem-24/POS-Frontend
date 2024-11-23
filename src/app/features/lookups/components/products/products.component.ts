@@ -106,7 +106,8 @@ loadProducts(){
   const product:IProduct = {};
   this.productService.getAllProducts(product).subscribe(
     response => {
-      this.products = response.Data;    }
+      this.products = response.Data;
+        }
   );
 }
   private  updateFlattenedCategories() :void {

@@ -1,0 +1,32 @@
+<div class="container mx-auto p-4">
+    @if (products.length > 0) {
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+
+            <ng-container >
+            @for (product of products; track product.ID) {
+                <app-card-item
+                [product]="product"
+                (addToCart)="onAddToCart(product)"
+                class="w-full"
+              ></app-card-item>
+            }       
+          </ng-container>
+        </div>
+    }
+
+
+  @if (isLoading) {
+    <div class="flex justify-center items-center min-h-[200px]">
+      <mat-spinner></mat-spinner>
+    </div>
+}
+
+@if (!products.length && !isLoading) {
+    <div class="text-center py-10">
+        <p class="text-gray-600">No products available</p>
+      </div>
+
+}
+   
+  </div>

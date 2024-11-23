@@ -1,4 +1,5 @@
 export interface IProduct {
+    ID?: number
     CategoryId? : number
     Code? : string 
     PurchasePrice? : number

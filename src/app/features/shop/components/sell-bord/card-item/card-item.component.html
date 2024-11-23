@@ -1,0 +1,65 @@
+<mat-card class="w-64 m-2 hover:shadow-lg transition-shadow duration-300">
+    <!-- Product Header -->
+    <mat-card-header class="pb-2">
+      <mat-card-title class="text-lg font-medium truncate">{{product?.Description}}</mat-card-title>
+      <mat-card-subtitle class="text-sm text-gray-600">Code: {{product?.Code}}</mat-card-subtitle>
+    </mat-card-header>
+  
+    <!-- Product Image -->
+    <img mat-card-image
+         [src]="product?.Image || 'assets/images/placeholder.png'"
+         [alt]="product?.Description"
+         class="h-40 w-full object-cover">
+  
+    <mat-card-content class="pt-3">
+      <!-- Price and Stock -->
+      <div class="flex justify-between items-center mb-3">
+        <span class="text-xl font-bold text-primary">{{product?.SellingPrice| currency}}</span>
+        <mat-chip-listbox>
+            <!-- get from database -->
+          <mat-chip-option [color]="(product?.Quantity || 0) < 10 ? 'warn' : 'primary'"  
+                   [selected]="true"
+                   class="text-sm">
+            الكمية المتوفرة: {{product?.Quantity}}
+          </mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+  
+      <!-- Quantity Controls -->
+      <div class="flex items-center gap-2 mb-3">
+        <button mat-icon-button 
+                color="primary"
+                (click)="decreaseQuantity()"
+                [disabled]="quantity <= 1">
+          <mat-icon>remove</mat-icon>
+        </button>
+        
+        <mat-form-field class="w-20">
+          <input matInput
+                 type="number"
+                 [(ngModel)]="quantity"
+                 min="1"
+                 [max]="(product?.Quantity || 0)"
+                 class="text-center">
+        </mat-form-field>
+  
+        <button mat-icon-button 
+                color="primary"
+                (click)="increaseQuantity()"
+                [disabled]="quantity >= (product?.Quantity || 0)">
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </mat-card-content>
+  
+    <!-- Action Button -->
+    <mat-card-actions class="px-4 pb-4">
+      <button mat-raised-button 
+              color="primary"
+              class="bg-customBlue text-white py-2 px-5 rounded hover:bg-blue-600 w-full"
+              (click)="addToCart()"
+              [disabled]="!(product?.Quantity || 0)">
+        اضف للعربة
+      </button>
+    </mat-card-actions>
+  </mat-card>
