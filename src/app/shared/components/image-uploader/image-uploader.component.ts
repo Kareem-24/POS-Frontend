@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { MatIconModule} from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
+const deleteIcon = 'src/assets/icons/delete.svg';
 @Component({
   selector: 'app-image-uploader',
   standalone: true,
@@ -14,8 +15,7 @@ export class ImageUploaderComponent {
   imagePreview: string | null = null;
   errorMessage: string | null = null;
   private readonly maxSizeInBytes = 5 * 1024 * 1024; // 5MB
-
-
+  deleteIcon = deleteIcon;
   onFileSelected(event: Event): void {
     const input  = event.target as HTMLInputElement;
     if (input.files?.length){

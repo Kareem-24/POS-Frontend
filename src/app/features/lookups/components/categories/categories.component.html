@@ -1,4 +1,4 @@
-// ... existing header ...
+<app-page-header [pageTitle]="pageTitle"/>
 
 <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
   <div class="items-center gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -19,8 +19,8 @@
         <mat-form-field>
           <mat-label>اختر الفئة الأساسية</mat-label>
           <mat-select formControlName="parentId">
-            <mat-option *ngFor="let category of parentCategories" [value]="category.id">
-              {{category.name}}
+            <mat-option *ngFor="let category of parentCategories" [value]="category.ID">
+              {{category.Description}}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="categoryForm.get('parentId')?.errors?.['required']">
@@ -33,6 +33,60 @@
 
   <app-save-btn [disabled]="!categoryForm.valid"/>
 </form>
+
+
+
+<div class="mt-8">
+  <table mat-table [dataSource]="flattenedCategories" class="mat-elevation-z8">
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>الفئة</th>
+      <td mat-cell *matCellDef="let item">
+        <div [class.pr-4]="item.isSubCategory">
+          {{item.Description}}
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Type Column -->
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef>النوع</th>
+      <td mat-cell *matCellDef="let item">
+        {{item.isSubCategory ? 'فئة فرعية' : 'فئة رئيسية'}}
+      </td>
+    </ng-container>
+
+    <!-- Parent Category Column -->
+    <ng-container matColumnDef="parentCategory">
+      <th mat-header-cell *matHeaderCellDef>الفئة الرئيسية</th>
+      <td mat-cell *matCellDef="let item">
+        {{item.isSubCategory ? item.parentDescription : '-'}}
+      </td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>الإجراءات</th>
+      <td mat-cell *matCellDef="let item">
+        <button mat-icon-button color="primary" (click)="editCategory(item)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteCategory(item)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25]"
+                 showFirstLastButtons
+                 aria-label="Select page">
+  </mat-paginator> -->
+
+</div>
 
 
 <app-notification

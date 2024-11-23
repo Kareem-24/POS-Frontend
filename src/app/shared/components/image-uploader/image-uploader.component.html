@@ -6,8 +6,8 @@
       
       <div class="text-center">
         <mat-icon class="text-4xl text-gray-400">cloud_upload</mat-icon>
-        <p class="mt-2 text-sm text-gray-600">Click to select an image</p>
-        <p class="text-xs text-gray-500 mt-1">Max size: 5MB</p>
+        <p class="mt-2 text-sm text-gray-600">انقر لاختيار صورة</p>
+        <p class="text-xs text-gray-500 mt-1">حد أقصى 5 ميجا</p>
       </div>
   
       <input
@@ -26,7 +26,7 @@
         color="warn"
         class="absolute -top-2 -right-2"
         (click)="removeImage()">
-        <mat-icon>close</mat-icon>
+        <img [src]="deleteIcon" alt="delete">
       </button>
     </div>
   

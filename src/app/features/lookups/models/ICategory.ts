@@ -5,8 +5,8 @@ export interface ICategory {
 
 export interface ICategoryWithSub {
   ID?: number;
-  Description: string;
-  SubCategory? : ISubCategory;
+  Description?: string;
+  SubCategory?: ISubCategory[];
 }
 
 

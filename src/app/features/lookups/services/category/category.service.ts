@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../../../environement';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ICategory,ISubCategory } from '../../models/ICategory';
+import { ICategory,ICategoryWithSub,ISubCategory } from '../../models/ICategory';
+import { IResult } from '../../../../shared/Models/IResult';
 
 @Injectable({
   providedIn: 'root'
@@ -13,40 +14,40 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  getAllCategories(category:ICategory): Observable<ICategory[]> {
-    return this.http.post<ICategory[]>(`${this.apiUrl}/GetAllCategories`,category);
+  getAllCategories(category:ICategory): Observable<IResult<ICategory>> {
+    return this.http.post<IResult<ICategory>>(`${this.apiUrl}/GetAllCategories`,category);
   }
 
-  getAllCategoriesWithSub(category:ICategory): Observable<ICategory[]> {
-    return this.http.post<ICategory[]>(`${this.apiUrl}/GetAllCategoriesWithSubCategory`,category);
+  getAllCategoriesWithSub(category:ICategory): Observable<IResult<ICategoryWithSub>> {
+    return this.http.post<IResult<ICategoryWithSub>>(`${this.apiUrl}/GetAllCategoriesWithSubCategory`,category);
   }
 
-  AddCategory(category:ICategory): Observable<ICategory[]> {
-    return this.http.post<ICategory[]>(`${this.apiUrl}/AddCategory`,category);
+  AddCategory(category:ICategory): Observable<IResult<ICategory>> {
+    return this.http.post<IResult<ICategory>>(`${this.apiUrl}/AddCategory`,category);
   }
 
-  UpdateCategory(category:ICategory): Observable<ICategory[]> {
-    return this.http.post<ICategory[]>(`${this.apiUrl}/UpdateCategory`,category);
+  UpdateCategory(category:ICategory): Observable<IResult<ICategory>> {
+    return this.http.post<IResult<ICategory>>(`${this.apiUrl}/UpdateCategory`,category);
   }
 
-  DeleteCategory(category:ICategory): Observable<ICategory[]> {
-    return this.http.post<ICategory[]>(`${this.apiUrl}/DeleteCategory`,category);
+  DeleteCategory(category:ICategory): Observable<IResult<ICategory>> {
+    return this.http.post<IResult<ICategory>>(`${this.apiUrl}/DeleteCategory`,category);
   }
 
 
 
-  getAllSubCategories(category:ISubCategory): Observable<ISubCategory[]> {
-    return this.http.post<ISubCategory[]>(`${this.apiUrl2}/GetAllSubCategories`,category);
+  getAllSubCategories(category:ISubCategory): Observable<IResult<ISubCategory>> {
+    return this.http.post<IResult<ISubCategory>>(`${this.apiUrl2}/GetAllSubCategories`,category);
   }
-  AddSubCategory(category:ISubCategory): Observable<ISubCategory[]> {
-    return this.http.post<ISubCategory[]>(`${this.apiUrl2}/AddSubCategory`,category);
-  }
-
-  UpdateSubCategory(category:ISubCategory): Observable<ISubCategory[]> {
-    return this.http.post<ISubCategory[]>(`${this.apiUrl2}/UpdateSubCategory`,category);
+  AddSubCategory(category:ISubCategory): Observable<IResult<ISubCategory>> {
+    return this.http.post<IResult<ISubCategory>>(`${this.apiUrl2}/AddSubCategory`,category);
   }
 
-  DeleteSubCategory(category:ISubCategory): Observable<ISubCategory[]> {
-    return this.http.post<ISubCategory[]>(`${this.apiUrl2}/DeleteSubCategory`,category);
+  UpdateSubCategory(category:ISubCategory): Observable<IResult<ISubCategory>> {
+    return this.http.post<IResult<ISubCategory>>(`${this.apiUrl2}/UpdateSubCategory`,category);
+  }
+
+  DeleteSubCategory(category:ISubCategory): Observable<IResult<ISubCategory>> {
+    return this.http.post<IResult<ISubCategory>>(`${this.apiUrl2}/DeleteSubCategory`,category);
   }
 }
