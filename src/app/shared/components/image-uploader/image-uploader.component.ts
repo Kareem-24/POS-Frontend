@@ -11,7 +11,7 @@ const deleteIcon = 'src/assets/icons/delete.svg';
   styleUrl: './image-uploader.component.css'
 })
 export class ImageUploaderComponent {
-  @Output() imageSelected = new EventEmitter<File>();
+  @Output() imageSelected = new EventEmitter<File>() || null;
   imagePreview: string | null = null;
   errorMessage: string | null = null;
   private readonly maxSizeInBytes = 5 * 1024 * 1024; // 5MB
@@ -26,12 +26,13 @@ export class ImageUploaderComponent {
   removeImage(): void {
     this.imagePreview = null;
     this.errorMessage = null;
-    this.imageSelected.emit(undefined);
+    this.imageSelected.emit(undefined)
+
   }
 
   private handleFile(file: File): void {
     this.errorMessage = null;
-
+console.log(this.imageSelected)
     if (file.size > this.maxSizeInBytes) {
       this.errorMessage = 'يجب ألا يكون حجم الصورة أكبر من 5MB';
       return;

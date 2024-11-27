@@ -1,0 +1,41 @@
+<div class="container mx-auto p-4">
+    <mat-card class="shadow-lg">
+      <mat-card-header>
+        <mat-card-title class="text-2xl font-bold mb-4">Shopping Cart</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="space-y-4">      
+           
+          <ng-container *ngIf="cartItems$ | async as items">
+
+            @if(items.length > 0) {
+                <div>
+                    @for( item of items; track item.ID){
+                        <app-cart-item
+                        [item]="item"
+                        (quantityChange)="updateQuantity($event, item)"
+                        (remove)="removeItem(item)"
+                      ></app-cart-item>
+                    }
+    
+                    <div class="mt-6 flex justify-between items-center">
+                      <span class="text-xl font-semibold">Total: ${{ total$ }}</span>
+                      <button mat-raised-button color="primary" (click)="checkout()">
+                        تأكيد عملية الدفع
+                      </button>
+                    </div>
+                  </div>
+            }@else{
+
+                <ng-template #emptyCart>
+                    <div class="text-center py-8">
+                      <p class="text-gray-500">اضف أصناف للعربة</p>
+                    </div>
+                  </ng-template>
+            }
+            
+          </ng-container>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>

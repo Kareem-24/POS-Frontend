@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { CartService } from './../../../services/cart/cart.service';
+import { Component, Input, OnInit } from '@angular/core';
 import { IProduct } from '../../../../lookups/models/IProduct';
 import { ProductService } from '../../../../lookups/services/product/product.service';
 import { CardItemComponent } from '../card-item/card-item.component';
@@ -14,8 +15,12 @@ import { CommonModule } from '@angular/common';
 export class BordComponent implements OnInit {
   products: IProduct[] = [];
   isLoading = true;
+  @Input() product?: IProduct;
 
-constructor(private productService: ProductService){}
+constructor(
+    private productService: ProductService,
+   private CartService : CartService
+  ){}
   ngOnInit() {
     this.loadProducts();
   }
@@ -32,8 +37,7 @@ constructor(private productService: ProductService){}
   }
 
   onAddToCart(product: IProduct): void {
-    // Implement add to cart logic
-    console.log('Product added to cart:', product);
-  }
-}
+    this.CartService.addToCart(product);
+    console.log(product)
+  }}
 

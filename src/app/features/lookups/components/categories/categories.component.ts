@@ -142,6 +142,7 @@ export class CategoriesComponent implements OnInit {
           next: () => {
             this.notificationService.showNotification('تم إضافة الفئة الفرعية بنجاح', 'success');
             this.categoryForm.reset(); 
+            this.loadParentCategories();
           },
           error: (error) => {
             this.notificationService.showNotification('حدث خطأ أثناء إضافة الفئة الفرعية', 'error');
@@ -156,6 +157,8 @@ export class CategoriesComponent implements OnInit {
           next: () => {
             this.notificationService.showNotification('تم إضافة الفئة بنجاح', 'success');
             this.categoryForm.reset(); 
+            this.loadParentCategories();
+
           },
           error: (error) => {
             this.notificationService.showNotification('حدث خطأ أثناء إضافة الفئة', 'error');

@@ -1,0 +1,19 @@
+<div class="flex items-center p-4 border-b border-gray-200">
+    <img [src]="item.Image" alt="{{ item.Description }}" class="w-20 h-20 object-cover rounded">
+    <div class="ml-4 flex-grow">
+      <h3 class="text-lg font-semibold">{{ item.Description }}</h3>
+      <p class="text-gray-600">EGP{{ item.SellingPrice }}</p>
+    </div>
+    <div class="flex items-center space-x-2">
+      <button mat-icon-button (click)="updateQuantity( - 1)" [disabled]="(item.Quantity || 0) <= 1">
+        <mat-icon>remove</mat-icon>
+      </button>
+      <span class="mx-2">{{ item.Quantity }}</span>
+      <button mat-icon-button (click)="updateQuantity((item.Quantity || 0) + 1)">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-icon-button color="warn" (click)="remove.emit()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>

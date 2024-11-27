@@ -152,6 +152,8 @@ if (this.productForm.valid) {
     next: () => {
       this.notificationService.showNotification('تم إضافة الصنف بنجاح', 'success');
       this.productForm.reset(); 
+      this.loadProducts();
+
     },
     error: (error) => {
       this.notificationService.showNotification('حدث خطأ أثناء إضافة الصنف', 'error');
