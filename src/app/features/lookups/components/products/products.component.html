@@ -1,6 +1,7 @@
 <app-page-header [pageTitle]="pageTitle"/>
-
 <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+  <input type="hidden"  formControlName="id">
+  
   <div class="items-center gap-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
     <mat-form-field class="col">
       <mat-label>إسم الصنف</mat-label>
@@ -92,11 +93,11 @@
   <ng-container matColumnDef="actions">
     <th mat-header-cell *matHeaderCellDef> الإجراءات </th>
     <td mat-cell *matCellDef="let product">
-      <button mat-icon-button color="primary">
-        <mat-icon>edit</mat-icon>
+      <button mat-icon-button (click)="EditProduct(product)">
+        <mat-icon color="primary">edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" >
-        <mat-icon>delete</mat-icon>
+      <button mat-icon-button (click)="DeleteProduct(product)">
+        <mat-icon color="warn">delete</mat-icon>
       </button>
     </td>
   </ng-container>

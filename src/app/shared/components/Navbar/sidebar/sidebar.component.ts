@@ -7,7 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { CommonModule } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatTreeModule } from '@angular/material/tree';
 import { UserTabComponent } from "../user-tab/user-tab.component";
 
@@ -23,7 +23,8 @@ import { UserTabComponent } from "../user-tab/user-tab.component";
     RouterOutlet,
     MatTreeModule,
     MatListModule,
-    UserTabComponent
+    UserTabComponent,
+    RouterLink
 ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.css',

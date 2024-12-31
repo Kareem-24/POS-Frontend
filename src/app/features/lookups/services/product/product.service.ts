@@ -24,7 +24,15 @@ export class ProductService {
     return this.http.post<IResult<IProduct>>(`${this.apiUrl}/UpdateProduct`,category);
   }
 
+  HideProduct(category:IProduct): Observable<IResult<IProduct>> {
+    return this.http.post<IResult<IProduct>>(`${this.apiUrl}/HideProduct`,category);
+  }
+
   DeleteProduct(category:IProduct): Observable<IResult<IProduct>> {
     return this.http.post<IResult<IProduct>>(`${this.apiUrl}/DeleteProduct`,category);
+  }
+
+  GetProductById(category:IProduct): Observable<IResult<IProduct>> {
+    return this.http.post<IResult<IProduct>>(`${this.apiUrl}/GetProductById`,category);
   }
 }

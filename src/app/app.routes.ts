@@ -9,8 +9,9 @@ export const routes: Routes = [
     { path: 'all-users', component: AllUsersComponent },
     { path: 'lookups/categories', component: CategoriesComponent },
     { path: 'lookups/products', component: ProductsComponent },
-    { path: 'sell-bord', component: BordComponent },
-    { path: 'cart', component: CartComponent }
+    { path: 'cart', component: CartComponent },
+    { path: '', redirectTo: '/sell-board', pathMatch: 'full' },
+    { path: 'sell-board', component: BordComponent },
 
   ];
 

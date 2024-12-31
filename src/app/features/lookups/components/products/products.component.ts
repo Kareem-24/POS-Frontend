@@ -14,6 +14,8 @@ import { IProduct } from '../../models/IProduct';
 import { NotificationComponent } from '../../../../shared/components/notification/notification.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 
 
@@ -45,7 +47,8 @@ interface FlattenedCategory {
      MatIconModule,
     ],
   templateUrl: './products.component.html',
-  styleUrl: './products.component.css'
+  styleUrl: './products.component.css',
+
 })
 export class ProductsComponent implements OnInit{
   pageTitle = "الأصناف";
@@ -58,10 +61,12 @@ export class ProductsComponent implements OnInit{
   constructor(private fb: FormBuilder,
      private productService: ProductService,
      private categoriesService: CategoryService,
-    public notificationService: NotificationService) {}
+    public notificationService: NotificationService,
+    public dialog: MatDialog) {}
 
   ngOnInit() {
     this.productForm = this.fb.group({
+      id: [''],
       name: ['', Validators.required],
       code: ['', Validators.required],
       category: ['', Validators.required],
@@ -91,6 +96,7 @@ const reader = new FileReader();
         image: null
       });
     }
+
   }
   loadParentCategories() {
     const category:ICategoryWithSub = {};
@@ -102,6 +108,7 @@ const reader = new FileReader();
       }
     );
   }
+
 loadProducts(){
   const product:IProduct = {};
   this.productService.getAllProducts(product).subscribe(
@@ -135,11 +142,50 @@ loadProducts(){
   }
 
 
+
+  EditProduct(product: IProduct): void {
+    this.productForm.patchValue({
+      id: product.ID,
+      name: product.Description,
+      code: product.Code,
+      category: product.CategoryId,
+      quantity: product.Quantity,
+      purchasePrice: product.PurchasePrice,
+      sellingPrice: product.SellingPrice,
+      image: product.Image 
+    });
+
+    if (product.Image != null) {
+      this.imageBase64 = product.Image;
+    }
+
+  }
+
+DeleteProduct(product: IProduct): void {
+  const dialogRef = this.dialog.open(ConfirmDialogComponent);
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      this.productService.DeleteProduct(product).subscribe({
+        next: () => {
+          this.notificationService.showNotification('تم حذف الصنف بنجاح', 'success');
+          this.loadProducts();
+        },
+        error: (error) => {
+          this.notificationService.showNotification('حدث خطاء في حذف الصنف', 'error');
+        }
+      });
+    }
+  });
+  
+}
+
+
   onSubmit(): void {
 if (this.productForm.valid) {
   const formData = this.productForm.value;
   console.log(formData);
   const product: IProduct = {
+    ID: formData.id,
     Description: formData.name,
     Code: formData.code,
     CategoryId: formData.category,
@@ -148,18 +194,39 @@ if (this.productForm.valid) {
     PurchasePrice: formData.purchasePrice,
     SellingPrice: formData.sellingPrice
   };
-  this.productService.AddProduct(product).subscribe({
-    next: () => {
-      this.notificationService.showNotification('تم إضافة الصنف بنجاح', 'success');
-      this.productForm.reset(); 
-      this.loadProducts();
-
-    },
-    error: (error) => {
-      this.notificationService.showNotification('حدث خطأ أثناء إضافة الصنف', 'error');
-    }
-  });
-} 
-
+console.log(`product id :${product.ID}`);
+  if (product.ID) {
+    this.productService.UpdateProduct(product).subscribe({
+      next: () => {
+        this.notificationService.showNotification('تم تحديث الصنف بنجاح', 'success');
+        this.productForm.reset(); 
+        this.loadProducts();
+      },
+      error: (error) => {
+        this.notificationService.showNotification(' حدث خطاء في التحديث', 'error');
+      }
+    });
+    
+  } else {
+    this.productService.AddProduct(product).subscribe({
+      next: () => {
+        this.notificationService.showNotification('تم إضافة الصنف بنجاح', 'success');
+        this.productForm.reset(); 
+        this.loadProducts();
+        this.productForm.setErrors(null);
+  
+      },
+      error: (error) => {
+        this.notificationService.showNotification('حدث خطأ أثناء إضافة الصنف', 'error');
+      }
+    });
   }
+
+  } 
+
 }
+
+}
+
+
+

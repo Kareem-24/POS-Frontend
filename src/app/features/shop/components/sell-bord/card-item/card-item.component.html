@@ -13,8 +13,7 @@
   
     <mat-card-content class="pt-3">
       <!-- Price and Stock -->
-      <div class="flex justify-between items-center mb-3">
-        <span class="text-xl font-bold text-primary">{{product?.SellingPrice| currency}}</span>
+      <div class="flex flex-col items-center mb-3">
         <mat-chip-listbox>
             <!-- get from database -->
           <mat-chip-option [color]="(product?.Quantity || 0) < 10 ? 'warn' : 'primary'"  
@@ -23,18 +22,19 @@
             الكمية المتوفرة: {{product?.Quantity}}
           </mat-chip-option>
         </mat-chip-listbox>
+        <span class="text-xl font-bold text-primary">{{product?.SellingPrice| currency:"EGP"}}</span>
       </div>
   
       <!-- Quantity Controls -->
       <div class="flex items-center gap-2 mb-3">
         <button mat-icon-button 
-                color="primary"
-                (click)="decreaseQuantity()"
-                [disabled]="quantity <= 1">
-          <mat-icon>remove</mat-icon>
-        </button>
+        color="primary"
+        (click)="increaseQuantity()"
+        [disabled]="quantity >= (product?.Quantity || 0)">
+  <mat-icon>add</mat-icon>
+</button>
         
-        <mat-form-field class="w-20">
+        <mat-form-field>
           <input matInput
                  type="number"
                  [(ngModel)]="quantity"
@@ -42,13 +42,13 @@
                  [max]="(product?.Quantity || 0)"
                  class="text-center">
         </mat-form-field>
-  
         <button mat-icon-button 
-                color="primary"
-                (click)="increaseQuantity()"
-                [disabled]="quantity >= (product?.Quantity || 0)">
-          <mat-icon>add</mat-icon>
-        </button>
+        color="primary"
+        (click)="decreaseQuantity()"
+        [disabled]="quantity <= 1">
+  <mat-icon>remove</mat-icon>
+</button>
+
       </div>
     </mat-card-content>
   
