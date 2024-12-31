@@ -52,6 +52,8 @@
   <app-save-btn type="submit" [disabled]="productForm.invalid"/>
 </form>
 
+<app-search-bar (search)="searchProducts($event)"></app-search-bar>
+
 <table mat-table [dataSource]="products" class="mat-elevation-z8">
   <!-- Code Column -->
   <ng-container matColumnDef="code">

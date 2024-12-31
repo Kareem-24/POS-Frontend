@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../../environement';
 import { IProduct } from '../../models/IProduct';
 import { IResult } from '../../../../shared/Models/IResult';
+import { ISearch } from '../../models/ISearch';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,9 @@ export class ProductService {
 
   GetProductById(category:IProduct): Observable<IResult<IProduct>> {
     return this.http.post<IResult<IProduct>>(`${this.apiUrl}/GetProductById`,category);
+  }
+
+  SearchProductByNameOrCode(category:ISearch): Observable<IResult<IProduct>> {
+    return this.http.post<IResult<IProduct>>(`${this.apiUrl}/SearchProductByNameOrCode`,category);
   }
 }

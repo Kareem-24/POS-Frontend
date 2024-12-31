@@ -1,3 +1,4 @@
+import { IProduct } from './../../models/IProduct';
 import { Component, OnInit } from '@angular/core';
 import {MatInputModule} from '@angular/material/input';
 import { PageHeaderComponent } from "../../../../shared/components/page-header/page-header.component";
@@ -10,12 +11,14 @@ import { CategoryService } from '../../services/category/category.service';
 import { ProductService } from '../../services/product/product.service';
 import { NotificationService } from '../../../../shared/services/notification/notification.service';
 import { ICategoryWithSub, ISubCategory } from '../../models/ICategory';
-import { IProduct } from '../../models/IProduct';
 import { NotificationComponent } from '../../../../shared/components/notification/notification.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
+import { ISearch } from '../../models/ISearch';
+import { SearchBarComponent } from '../../../../shared/components/search-bar/search-bar/search-bar.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 
@@ -45,6 +48,8 @@ interface FlattenedCategory {
      NotificationComponent,
      MatTableModule,
      MatIconModule,
+     SearchBarComponent,
+     MatProgressSpinnerModule
     ],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
@@ -58,6 +63,7 @@ export class ProductsComponent implements OnInit{
   flattenedCategories: FlattenedCategory[] = [];
   displayedColumns: string[] = ['code', 'description', 'category', 'quantity', 'purchasePrice', 'sellingPrice', 'actions'];
   products: IProduct[] = [];
+  searchForm!: FormGroup;
   constructor(private fb: FormBuilder,
      private productService: ProductService,
      private categoriesService: CategoryService,
@@ -65,6 +71,7 @@ export class ProductsComponent implements OnInit{
     public dialog: MatDialog) {}
 
   ngOnInit() {
+
     this.productForm = this.fb.group({
       id: [''],
       name: ['', Validators.required],
@@ -75,8 +82,10 @@ export class ProductsComponent implements OnInit{
       sellingPrice: ['', [Validators.required, Validators.min(0)]],
       image: [''] // Optional field
     });
+
     this.loadParentCategories();
     this.loadProducts();
+
   }
 
 
@@ -116,6 +125,7 @@ loadProducts(){
       this.products = response.Data;
         }
   );
+
 }
   private  updateFlattenedCategories() :void {
     this.flattenedCategories = [];
@@ -179,6 +189,22 @@ DeleteProduct(product: IProduct): void {
   
 }
 
+searchProducts(searchTerm: string): void {
+  let request = {} as ISearch;
+
+  if (searchTerm) {
+    request.Name = searchTerm;
+    this.productService.SearchProductByNameOrCode(request).subscribe({
+      next: (response) => {
+        this.products = response.Data as IProduct[];
+
+      },
+      error: (error) => {
+        this.notificationService.showNotification('حدث خطاء في عملية البحث ', 'error');
+      }
+    });
+  }
+}
 
   onSubmit(): void {
 if (this.productForm.valid) {
@@ -194,7 +220,6 @@ if (this.productForm.valid) {
     PurchasePrice: formData.purchasePrice,
     SellingPrice: formData.sellingPrice
   };
-console.log(`product id :${product.ID}`);
   if (product.ID) {
     this.productService.UpdateProduct(product).subscribe({
       next: () => {
@@ -208,8 +233,13 @@ console.log(`product id :${product.ID}`);
     });
     
   } else {
+      product.ID = 0;
     this.productService.AddProduct(product).subscribe({
-      next: () => {
+      next: (res) => {
+          if (!res.IsSuccess) {
+            this.notificationService.showNotification(res.ErrorMessage, 'error');
+            return;
+          }
         this.notificationService.showNotification('تم إضافة الصنف بنجاح', 'success');
         this.productForm.reset(); 
         this.loadProducts();
